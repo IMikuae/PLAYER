@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1db954">
+  <meta name="description" content="Local-first audio player, offline PWA.">
+  <title>Local Player — Offline PWA</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="player-container">
+    <audio id="audioPlayer" preload="metadata"></audio>
+    <input type="file" id="fileInput" multiple accept="audio/*,.mp3,.m4a,.wav,.ogg,.opus,.flac,.aac" style="display:none">
+
+    <section class="player-section" aria-label="Pemutar">
+      <div class="topbar">
+        <button class="icon-btn" id="themeBtn" title="Tema" aria-label="Ganti tema">◐</button>
+      </div>
+
+      <div class="album-wrapper">
+        <img src="assets/icon.svg" alt="Album Art" class="album-art" id="albumArt">
+        <div class="center-hole" aria-hidden="true">🎵</div>
+      </div>
+
+      <div class="song-info">
+        <div class="song-title" id="songTitle">Belum Ada Lagu</div>
+        <div class="song-artist" id="songArtist">Pilih "+ Tambah"</div>
+        <div class="song-meta" id="songMeta"></div>
+      </div>
+
+      <div class="progress-area">
+        <span class="time" id="currentTime">0:00</span>
+        <div class="progress-bar" id="progressBar" role="slider" tabindex="0" aria-label="Posisi lagu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span class="time" id="totalTime">0:00</span>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="shuffleBtn" title="Shuffle" aria-label="Shuffle" aria-pressed="false">🔀</button>
+        <button class="btn" id="prevBtn" title="Sebelumnya (P)" aria-label="Sebelumnya" disabled>⏮</button>
+        <button class="btn btn-play" id="playBtn" title="Play/Pause (Spasi)" aria-label="Play" disabled>▶</button>
+        <button class="btn" id="nextBtn" title="Berikutnya (N)" aria-label="Berikutnya" disabled>⏭</button>
+        <button class="btn" id="repeatBtn" title="Repeat: off → all → one" aria-label="Repeat">🔁<span class="repeat-mode" id="repeatLabel"></span></button>
+      </div>
+
+      <div class="sub-controls">
+        <div class="volume-wrap">
+          <button class="btn" id="muteBtn" aria-label="Mute" style="font-size:18px">🔊</button>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+        </div>
+      </div>
+      <div class="hint">Spasi play/pause • ←/→ 5s • N/P next/prev • M mute • L favorit</div>
+    </section>
+
+    <section class="playlist-section" aria-label="Playlist">
+      <div class="playlist-header">
+        <div class="playlist-toprow">
+          <div class="playlist-title">Antrean <small id="countLabel"></small></div>
+          <div class="header-actions">
+            <button class="ghost-btn" id="clearBtn" title="Hapus semua">Hapus</button>
+            <button class="add-music-btn" id="addMusicBtn">+ Tambah</button>
+          </div>
+        </div>
+        <input class="search-input" id="searchInput" type="search" placeholder="Cari judul / artis..." aria-label="Cari lagu">
+        <div class="q-seg" role="tablist">
+          <button class="tab-btn active" data-filter="all" role="tab">Semua</button>
+          <button class="tab-btn" data-filter="fav" role="tab">Favorit</button>
+          <button class="tab-btn" data-filter="audio" role="tab">Audio</button>
+        </div>
+      </div>
+      <div class="track-list" id="trackList" role="listbox" aria-label="Daftar lagu">
+        <div class="empty-state">Memuat...</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="drop-overlay" id="dropOverlay">Tarik & letakkan file audio di sini</div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+  <script type="module" src="js/player.js"></script>
+</body>
+</html>
